@@ -1,0 +1,14 @@
+import Typography from "@material-ui/core/Typography";
+import useStyles from "./{component_name}Style";
+
+export default function {component_name}View() {
+  const classes = useStyles();
+
+  return (
+    <div className={classes.root}>
+      <Typography>
+        {component_name}View <b>Works!</b>
+      </Typography>
+    </div>
+  );
+}

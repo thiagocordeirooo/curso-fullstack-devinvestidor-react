@@ -1,0 +1,10 @@
+import { useEffect, useState } from "react";
+import {component_name}View from "./{component_name}View";
+
+export default function {component_name}() {
+  const [state, setState] = useState({});
+
+  useEffect(() => {}, []);
+
+  return <{component_name}View {...{ state }} />;
+}

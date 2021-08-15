@@ -1,9 +1,12 @@
 import MainRoutes from './main.routes';
+import { SnackbarContextProvider } from '_common/components/Snackbar/context/SnackbarContext';
 
 function App() {
   return (
     <>
-      <MainRoutes />
+      <SnackbarContextProvider>
+        <MainRoutes />
+      </SnackbarContextProvider>
     </>
   );
 }

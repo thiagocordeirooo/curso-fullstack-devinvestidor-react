@@ -1,7 +1,10 @@
+import { useContext } from 'react';
+import { MainLayoutContext } from './context/MainLayoutContext';
 import MainLayoutView from './MainLayoutView';
 
 const MainLayout = ({ children }) => {
-  return <MainLayoutView {...{ children }} />;
+  const { sidebarOpen } = useContext(MainLayoutContext);
+  return <MainLayoutView {...{ children, sidebarOpen }} />;
 };
 
 export default MainLayout;

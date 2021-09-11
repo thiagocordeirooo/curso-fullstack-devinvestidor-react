@@ -1,6 +1,7 @@
 import Button from '@material-ui/core/Button';
-
-const { default: PageHeader } = require('_common/components/PageHeader');
+import PageHeader from '_common/components/PageHeader';
+import UsersListFilter from './UsersListFilter';
+import UsersListTable from './UsersListTable';
 
 const UsersListView = () => {
   const newButton = <Button>Novo</Button>;
@@ -8,6 +9,8 @@ const UsersListView = () => {
   return (
     <>
       <PageHeader title="Usuários" actionButton={newButton} />
+      <UsersListFilter />
+      <UsersListTable />
     </>
   );
 };

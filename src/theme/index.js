@@ -17,6 +17,10 @@ const theme = createTheme({
     MuiButton: {
       variant: 'contained',
       color: 'primary'
+    },
+    MuiTextField: {
+      variant: 'outlined',
+      fullWidth: true
     }
   }
 });

@@ -1,10 +1,13 @@
 import { Route, Switch } from 'react-router-dom';
 import UsersList from './UsersList';
+import { UsersListContextProvider } from './UsersList/context/UsersListContext';
 
 const UsersRoutes = ({ match: { url } }) => {
   return (
     <Switch>
-      <Route path={`${url}/`} component={UsersList} />
+      <UsersListContextProvider>
+        <Route path={`${url}/`} component={UsersList} />
+      </UsersListContextProvider>
     </Switch>
   );
 };

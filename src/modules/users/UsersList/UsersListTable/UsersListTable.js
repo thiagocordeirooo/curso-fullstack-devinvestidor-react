@@ -1,12 +1,15 @@
 import UserService from 'modules/users/services/user.service';
 import { useContext, useEffect, useState } from 'react';
+import useSnackbar from '_common/hooks/useSnackbar';
 import { UsersListContext } from '../context/UsersListContext';
 import UsersListTableView from './UsersListTableView';
 
 const UsersListTable = () => {
   const { users, setUsers, filter, setUserDialog } = useContext(UsersListContext);
+  const { snackbar, snackbarSuccess } = useSnackbar();
 
   const [filteredUsers, setFilteredUsers] = useState(null);
+  const [userDelete, setUserDelete] = useState(null);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -32,7 +35,20 @@ const UsersListTable = () => {
 
   const handleEdit = (user) => setUserDialog({ open: true, user });
 
-  return <UsersListTableView users={filteredUsers} {...{ handleEdit }} />;
+  const handleDeleteConfirmation = async () => {
+    try {
+      await UserService.remove(userDelete._id);
+
+      setUsers((prevUsers) => prevUsers.filter((prevUser) => prevUser._id !== userDelete._id));
+      snackbarSuccess();
+    } catch ({ response: { data } }) {
+      snackbar(data.message);
+    } finally {
+      setUserDelete(null);
+    }
+  };
+
+  return <UsersListTableView users={filteredUsers} {...{ handleEdit, userDelete, setUserDelete, handleDeleteConfirmation }} />;
 };
 
 export default UsersListTable;

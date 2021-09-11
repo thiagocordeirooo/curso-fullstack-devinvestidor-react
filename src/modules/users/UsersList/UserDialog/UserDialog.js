@@ -9,7 +9,7 @@ import { UsersListContext } from '../context/UsersListContext';
 const UserDialog = () => {
   const { setUsers, setUserDialog, userDialog: userDialogState } = useContext(UsersListContext);
 
-  const { snackbar } = useSnackbar();
+  const { snackbar, snackbarSuccess } = useSnackbar();
 
   const handleOnClose = () => setUserDialog({ open: false });
 
@@ -44,6 +44,7 @@ const UserDialog = () => {
       }
 
       handleOnClose();
+      snackbarSuccess();
     } catch ({ response: { data } }) {
       snackbar(data.message);
     } finally {

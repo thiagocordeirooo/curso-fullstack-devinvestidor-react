@@ -1,3 +1,4 @@
+import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -5,13 +6,14 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+import ConfirmationDialog from '_common/components/ConfirmationDialog';
 import EmptyBox from '_common/lotties/EmptyBox';
 import LoadingSpinner from '_common/lotties/LoadingSpinner';
 import useStyles from './UsersListTableStyle';
-import IconButton from '@material-ui/core/IconButton';
-import EditIcon from '@material-ui/icons/Edit';
 
-const UsersListTableView = ({ users, handleEdit }) => {
+const UsersListTableView = ({ users, handleEdit, userDelete, setUserDelete, handleDeleteConfirmation }) => {
   const classes = useStyles();
 
   return (
@@ -37,6 +39,9 @@ const UsersListTableView = ({ users, handleEdit }) => {
                     <IconButton onClick={() => handleEdit(user)}>
                       <EditIcon />
                     </IconButton>
+                    <IconButton onClick={() => setUserDelete(user)}>
+                      <DeleteIcon />
+                    </IconButton>
                   </TableCell>
                 </TableRow>
               ))}
@@ -45,6 +50,14 @@ const UsersListTableView = ({ users, handleEdit }) => {
       </TableContainer>
       {!users && <LoadingSpinner />}
       {users && !users.length && <EmptyBox />}
+      {userDelete && (
+        <ConfirmationDialog
+          title="Excluir Usuário"
+          text={`Tem certeza que deseja excluir o usuário ${userDelete.name}?`}
+          handleClose={() => setUserDelete(null)}
+          handleConfirmation={handleDeleteConfirmation}
+        />
+      )}
     </>
   );
 };

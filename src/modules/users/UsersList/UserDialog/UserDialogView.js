@@ -1,6 +1,7 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, TextField } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import formatDate from '_common/utils/formatDate';
 
 const UserDialogView = ({ form, handleOnClose }) => {
   const theme = useTheme();
@@ -46,6 +47,11 @@ const UserDialogView = ({ form, handleOnClose }) => {
                 helperText={form.touched.password && form.errors.password}
               />
             </Grid>
+            {form.values.creation && (
+              <Grid item>
+                <TextField label="Data de Criação" value={formatDate(new Date(form.values.creation))} disabled />
+              </Grid>
+            )}
           </Grid>
         </DialogContent>
         <DialogActions>

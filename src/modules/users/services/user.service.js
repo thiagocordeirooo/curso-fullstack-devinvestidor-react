@@ -6,6 +6,10 @@ const getAll = () => {
   return api.get(BASE_PATH);
 };
 
-const UserService = { getAll };
+const post = (values) => {
+  return api.post(BASE_PATH, values);
+};
+
+const UserService = { getAll, post };
 
 export default UserService;

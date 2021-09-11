@@ -1,17 +1,14 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, TextField } from '@material-ui/core';
-import useStyles from './UserDialogStyle';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const UserDialogView = ({ form, handleOnClose }) => {
-  const classes = useStyles();
-
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
     <Dialog fullWidth maxWidth="xs" open onClose={handleOnClose} {...{ fullScreen }}>
-      <DialogTitle>Novo Usuário</DialogTitle>
+      <DialogTitle>{form.values._id ? 'Editar' : 'Novo'} Usuário</DialogTitle>
       <form onSubmit={form.handleSubmit} noValidate autoComplete="off">
         <DialogContent dividers>
           <Grid container direction="column" spacing={2}>

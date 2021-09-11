@@ -4,7 +4,7 @@ import { UsersListContext } from '../context/UsersListContext';
 import UsersListTableView from './UsersListTableView';
 
 const UsersListTable = () => {
-  const { users, setUsers, filter } = useContext(UsersListContext);
+  const { users, setUsers, filter, setUserDialog } = useContext(UsersListContext);
 
   const [filteredUsers, setFilteredUsers] = useState(null);
 
@@ -30,7 +30,9 @@ const UsersListTable = () => {
     }
   }, [filter, users]);
 
-  return <UsersListTableView users={filteredUsers} />;
+  const handleEdit = (user) => setUserDialog({ open: true, user });
+
+  return <UsersListTableView users={filteredUsers} {...{ handleEdit }} />;
 };
 
 export default UsersListTable;

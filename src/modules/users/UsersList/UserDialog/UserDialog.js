@@ -7,7 +7,7 @@ import { useContext } from 'react';
 import { UsersListContext } from '../context/UsersListContext';
 
 const UserDialog = () => {
-  const { setUsers, setUserDialog } = useContext(UsersListContext);
+  const { setUsers, setUserDialog, userDialog: userDialogState } = useContext(UsersListContext);
 
   const { snackbar } = useSnackbar();
 
@@ -33,11 +33,15 @@ const UserDialog = () => {
 
   const onSubmit = async (values, { setSubmitting }) => {
     try {
-      const {
-        data: { body }
-      } = await UserService.post(values);
-
-      setUsers((prevUsers) => [...prevUsers, body]);
+      if (values._id) {
+        await UserService.put(values);
+        updateUsersContext(values);
+      } else {
+        const {
+          data: { body }
+        } = await UserService.post(values);
+        updateUsersContext(body, true);
+      }
 
       handleOnClose();
     } catch ({ response: { data } }) {
@@ -47,9 +51,17 @@ const UserDialog = () => {
     }
   };
 
+  const updateUsersContext = (user, isNew) => {
+    if (isNew) {
+      setUsers((prevUsers) => [...prevUsers, user]);
+    } else {
+      setUsers((prevUsers) => prevUsers.map((prevUser) => (prevUser._id === user._id ? user : prevUser)));
+    }
+  };
+
   const form = useFormik({
     validationSchema,
-    initialValues,
+    initialValues: userDialogState.user || initialValues,
     onSubmit
   });
 

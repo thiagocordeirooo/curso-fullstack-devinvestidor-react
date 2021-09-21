@@ -22,11 +22,16 @@ const put = (task) => {
   return api.put(`${BASE_PATH}/${task._id}`, task);
 };
 
+const remove = (taskId) => {
+  return api.delete(`${BASE_PATH}/${taskId}`);
+};
+
 const TaskService = {
   getByStatus,
   getResponsibles,
   post,
-  put
+  put,
+  remove
 };
 
 export default TaskService;

@@ -7,13 +7,15 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import ConfirmationDialog from '_common/components/ConfirmationDialog';
 import { TASK_STATUS } from '_common/constants/common.constants';
 import EmptyBox from '_common/lotties/EmptyBox';
 import LoadingSpinner from '_common/lotties/LoadingSpinner';
 import useStyles from './TasksListTableStyle';
 
-const TasksListTableView = ({ tasks, handleEdit }) => {
+const TasksListTableView = ({ tasks, handleEdit, taskDelete, setTaskDelete, handleDeleteConfirmation }) => {
   const classes = useStyles();
 
   const renderStatusChip = (status) => {
@@ -50,6 +52,9 @@ const TasksListTableView = ({ tasks, handleEdit }) => {
                     <IconButton onClick={() => handleEdit(task)}>
                       <EditIcon />
                     </IconButton>
+                    <IconButton onClick={() => setTaskDelete(task)}>
+                      <DeleteIcon />
+                    </IconButton>
                   </TableCell>
                 </TableRow>
               ))}
@@ -58,6 +63,14 @@ const TasksListTableView = ({ tasks, handleEdit }) => {
       </TableContainer>
       {!tasks && <LoadingSpinner />}
       {tasks && !tasks.length && <EmptyBox />}
+      {taskDelete && (
+        <ConfirmationDialog
+          title="Excluir Tarefa"
+          text={`Tem certeza que deseja excluir a tarefa ${taskDelete.description}?`}
+          handleClose={() => setTaskDelete(null)}
+          handleConfirmation={handleDeleteConfirmation}
+        />
+      )}
     </>
   );
 };

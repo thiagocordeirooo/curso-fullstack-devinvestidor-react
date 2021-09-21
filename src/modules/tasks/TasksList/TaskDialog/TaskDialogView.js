@@ -9,6 +9,7 @@ import { useTheme } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { TASK_STATUS } from '_common/constants/common.constants';
+import formatDate from '_common/utils/formatDate';
 
 const TaskDialogView = ({ form, handleOnClose, responsibles }) => {
   const theme = useTheme();
@@ -17,7 +18,7 @@ const TaskDialogView = ({ form, handleOnClose, responsibles }) => {
   return (
     <>
       <Dialog fullWidth maxWidth="xs" open onClose={handleOnClose} {...{ fullScreen }}>
-        <DialogTitle>Nova Tarefa</DialogTitle>
+        <DialogTitle>{form.values._id ? 'Editar' : 'Nova'} Tarefa</DialogTitle>
         <form onSubmit={form.handleSubmit} noValidate autoComplete="off">
           <DialogContent dividers>
             <Grid container direction="column" spacing={3}>
@@ -63,6 +64,16 @@ const TaskDialogView = ({ form, handleOnClose, responsibles }) => {
                   ))}
                 </TextField>
               </Grid>
+              {form.values.creation && (
+                <Grid item>
+                  <TextField label="Data Criação" value={formatDate(new Date(form.values.creation))} disabled />
+                </Grid>
+              )}
+              {form.values.concluded && (
+                <Grid item>
+                  <TextField label="Data Conclusão" value={formatDate(new Date(form.values.concluded))} disabled />
+                </Grid>
+              )}
             </Grid>
           </DialogContent>
 

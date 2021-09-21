@@ -5,7 +5,7 @@ import { TaskListContext } from '../context/TaskListContext';
 import TasksListTableView from './TasksListTableView';
 
 const TasksListTable = () => {
-  const { tasks, setTasks, filter } = useContext(TaskListContext);
+  const { tasks, setTasks, filter, setTaskDialog } = useContext(TaskListContext);
   const { status } = useParams();
 
   const [filteredTasks, setFilteredTasks] = useState(null);
@@ -40,7 +40,11 @@ const TasksListTable = () => {
     }
   }, [filter, tasks]);
 
-  return <TasksListTableView tasks={filteredTasks} />;
+  const handleEdit = (task) => {
+    setTaskDialog({ open: true, task: { ...task, responsible: task.responsible._id } });
+  };
+
+  return <TasksListTableView tasks={filteredTasks} {...{ handleEdit }} />;
 };
 
 export default TasksListTable;

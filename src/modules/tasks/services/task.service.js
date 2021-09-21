@@ -18,10 +18,15 @@ const post = (task) => {
   return api.post(`${BASE_PATH}`, task);
 };
 
+const put = (task) => {
+  return api.put(`${BASE_PATH}/${task._id}`, task);
+};
+
 const TaskService = {
   getByStatus,
   getResponsibles,
-  post
+  post,
+  put
 };
 
 export default TaskService;

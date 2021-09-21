@@ -1,10 +1,13 @@
 import { Route, Switch } from 'react-router-dom';
 import TasksList from './TasksList';
+import { TaskListContextProvider } from './TasksList/context/TaskListContext';
 
 const TasksRoutes = ({ match: { url } }) => {
   return (
     <Switch>
-      <Route path={`${url}/`} component={TasksList} />
+      <TaskListContextProvider>
+        <Route path={`${url}/:status?`} component={TasksList} />
+      </TaskListContextProvider>
     </Switch>
   );
 };

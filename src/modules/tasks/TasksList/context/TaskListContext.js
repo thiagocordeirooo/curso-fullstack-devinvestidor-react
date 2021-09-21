@@ -7,5 +7,11 @@ export const TaskListContextProvider = memo(({ children }) => {
   const [tasks, setTasks] = useState(null);
   const [filter, setFilter] = useState(null);
 
-  return <TaskListContext.Provider value={{ tasks, setTasks, filter, setFilter }}>{children}</TaskListContext.Provider>;
+  const [taskDialog, setTaskDialog] = useState({ open: false });
+
+  return (
+    <TaskListContext.Provider value={{ tasks, setTasks, filter, setFilter, taskDialog, setTaskDialog }}>
+      {children}
+    </TaskListContext.Provider>
+  );
 });
